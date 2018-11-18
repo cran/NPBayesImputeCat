@@ -1,0 +1,5 @@
+useDynLib(NPBayesImputeCat)
+exportPattern("^[[:alpha:]]+")
+import(methods)
+import(Rcpp)
+exportClasses(Rcpp_Lcm)
