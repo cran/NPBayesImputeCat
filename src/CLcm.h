@@ -1,6 +1,4 @@
 /*
- * Copyright (C) 2007-2014 Daniel Manrique-Vallier
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or (at
@@ -14,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * Modified by Quanli Wang, 2014
+ * Modified by Quanli Wang, 2014, 2019
  */ 
  
 #ifndef _CLcm_H
@@ -31,8 +29,8 @@ public:
 	CLcm(CData *_data, CParam *_par) : par(_par), data(_data){
 		class_construct(data, par);
 	}
-	CLcm(CData* _data, int K, int Nmis_max,  double a_alpha, double b_alpha)
-			: data(_data){
+	CLcm(CData* _data, int K, int Nmis_max,  double a_alpha, double b_alpha, int seed)
+			: randomseed(seed), data(_data) {
 				par = new CParam(data->J, K, data->L, data->levelsJ, data->cumLevelsJ,data->n, Nmis_max, data->ZeroMC_IJ, data->nZeroMC, a_alpha, b_alpha,data->x);
 		class_construct(data, par);
 	}
@@ -48,12 +46,13 @@ public:
 
 	MTRand mt;
 	int NmisOverflow;
+	int randomseed;
 private:
 	CData* data;
 	void class_construct(CData* data, CParam* par){
 		//r = dan_initRandom(); //initializes a random number generator
 		//mt.seed(1234);
-		mt.seed();
+		mt.seed(randomseed);
 		current_iteration = 0;
 		burnin=1;
 		thining=1;

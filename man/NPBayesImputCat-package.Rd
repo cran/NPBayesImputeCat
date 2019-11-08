@@ -47,7 +47,7 @@ require(NPBayesImputeCat)
 data('NYMockexample')
 
 #create the model
-model <- CreateModel(X,MCZ,10,10000,0.25,0.25)
+model <- CreateModel(X,MCZ,10,10000,0.25,0.25,8888)
 
 #run 1 burnins, 2 mcmc iterations and thin every 2 iterations
 model$Run(1,2,2)

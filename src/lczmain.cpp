@@ -38,7 +38,7 @@ RCPP_MODULE(clcm){
 	
 	class_<CEnv>( "Lcm" )
     // expose the default constructor
-    .constructor<Rcpp::IntegerMatrix, Rcpp::IntegerMatrix, int, int,  double, double>()
+    .constructor<Rcpp::IntegerMatrix, Rcpp::IntegerMatrix, int, int,  double, double, int>()
 
 	.method( "SetTrace", &CEnv::SetTrace, "Set parameters to be traced" )
 	.method( "GetTrace", &CEnv::GetTrace, "Get parameters to be traced" )

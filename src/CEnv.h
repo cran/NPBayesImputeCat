@@ -53,7 +53,7 @@ public:
 class CEnv
 {
 public:
-	CEnv(Rcpp::IntegerMatrix x_, Rcpp::IntegerMatrix mcz_, int K, int Nmis_max,  double a_alpha, double b_alpha);
+	CEnv(Rcpp::IntegerMatrix x_, Rcpp::IntegerMatrix mcz_, int K, int Nmis_max,  double a_alpha, double b_alpha, int seed);
 	void SetXAsDataframe(Rcpp::DataFrame X_df);
 	void UpdateX(Rcpp::IntegerMatrix x_);
 	~CEnv(void);
@@ -79,7 +79,7 @@ public:
 private:
 	void SetData(Rcpp::IntegerMatrix x_, Rcpp::IntegerMatrix mcz_);
 	void SetData(std::vector<int>& x_flat, int J, int n, std::vector<int>& ZeroMC_flat, int nZeroMC, std::vector<int>& levels);
-	void SetModel(int K, int Nmis_max,  double a_alpha, double b_alpha);
+	void SetModel(int K, int Nmis_max,  double a_alpha, double b_alpha, int seed);
 	
 	
 	Rcpp::DataFrame mX_df;

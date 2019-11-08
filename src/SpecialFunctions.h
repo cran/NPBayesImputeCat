@@ -1,21 +1,3 @@
-/*
- * Copyright (C) 2014 Quanli Wang
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or (at
- * your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
- */ 
-
 #pragma once
 #include <vector>
 #include <climits>
@@ -27,21 +9,21 @@ using namespace std;
 class MTRand {
 public:
   typedef unsigned long uint32;
-  enum { N = 624 };       
-  enum { SAVE = N + 1 };  
-  
+  enum { N = 624 };
+  enum { SAVE = N + 1 };
+
 protected:
   enum { M = 397 };  // period parameter
   uint32 state[N];   // internal state
   uint32 *pNext;     // next value to get from state
   int left;          // number of values left before reload needed
-  
+
   //Methods
 public:
-  MTRand( const uint32& oneSeed ); 
-  MTRand( uint32 *const bigSeed, uint32 const seedLength = N );  
-  MTRand();  
-  
+  MTRand( const uint32& oneSeed );
+  MTRand( uint32 *const bigSeed, uint32 const seedLength = N );
+  MTRand();
+
   // Access to 32-bit random numbers
   double rand();                          // real number in [0,1]
   double rand( const double& n );         // real number in [0,n]
@@ -52,15 +34,15 @@ public:
   uint32 randInt();                       // integer in [0,2^32-1]
   uint32 randInt( const uint32& n );      // integer in [0,n] for n < 2^32
   double operator()() { return rand(); }  // same as rand()
-  
+
   // Access to nonuniform random number distributions
   double randNorm( const double& mean = 0.0, const double& variance = 0.0 );
-  
+
   // Re-seeding functions with same behavior as initializers
   void seed( const uint32 oneSeed );
   void seed( uint32 *const bigSeed, const uint32 seedLength = N );
   void seed();
-  
+
 protected:
   void initialize( const uint32 oneSeed );
   void reload();
@@ -115,11 +97,11 @@ inline MTRand::uint32 MTRand::randInt()
 {
   // Pull a 32-bit integer from the generator state
   // Every other access function simply transforms the numbers extracted here
-  
+
   if( left == 0 ) reload();
   --left;
-  
-  register uint32 s1;
+
+  uint32 s1;
   s1 = *pNext++;
   s1 ^= (s1 >> 11);
   s1 ^= (s1 <<  7) & 0x9d2c5680UL;
@@ -136,7 +118,7 @@ inline MTRand::uint32 MTRand::randInt( const uint32& n ) {
   used |= used >> 16;
   uint32 i;
   do
-    i = randInt() & used; 
+    i = randInt() & used;
   while( i > n );
   return i;
 }
@@ -150,9 +132,9 @@ inline void MTRand::seed( const uint32 oneSeed )
 
 inline void MTRand::seed( uint32 *const bigSeed, const uint32 seedLength ) {
   initialize(19650218UL);
-  register int i = 1;
-  register uint32 j = 0;
-  register int k = ( N > seedLength ? N : seedLength );
+  int i = 1;
+  uint32 j = 0;
+  int k = ( N > seedLength ? N : seedLength );
   for( ; k; --k )
   {
     state[i] =
@@ -172,7 +154,7 @@ inline void MTRand::seed( uint32 *const bigSeed, const uint32 seedLength ) {
     ++i;
     if( i >= N ) { state[0] = state[N-1];  i = 1; }
   }
-  state[0] = 0x80000000UL;  
+  state[0] = 0x80000000UL;
   reload();
 }
 
@@ -194,19 +176,19 @@ inline void MTRand::initialize( const uint32 seed ) {
 }
 
 inline void MTRand::reload() {
-  register uint32 *p = state;
-  register int i;
+  uint32 *p = state;
+  int i;
   for( i = N - M; i--; ++p )
     *p = twist( p[M], p[0], p[1] );
   for( i = M; --i; ++p )
     *p = twist( p[M-N], p[0], p[1] );
   *p = twist( p[M-N], p[0], state[0] );
-  
+
   left = N, pNext = state;
 }
 
 inline MTRand::uint32 MTRand::hash( time_t t, clock_t c ) {
-  static uint32 differ = 0;  
+  static uint32 differ = 0;
   uint32 h1 = 0;
   unsigned char *p = (unsigned char *) &t;
   for( size_t i = 0; i < sizeof(t); ++i ) {
@@ -221,7 +203,6 @@ inline MTRand::uint32 MTRand::hash( time_t t, clock_t c ) {
   }
   return ( h1 + differ++ ) ^ h2;
 }
-
 
 class SpecialFunctions
 {
@@ -239,7 +220,7 @@ public:
 	static double gammacdf(double x,double a, double b);
 	static double gammainv(double p,double a, double b);
 	static double gammapdf(double x,double a, double b);
-	
+
 	static void cmpower2(int nSize, double *px, double* py, double* pResult);
 	static void cmrand(int nSize, MTRand& mt, double* pResult);
 	static bool gammarand(double a, double b, int nSize, MTRand& mt, vector<double>& result);

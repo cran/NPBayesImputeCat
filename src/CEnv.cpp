@@ -47,9 +47,9 @@ static inline void check_interrupt_impl(void* /*dummy*/) {
 inline bool check_interrupt() {
     return (R_ToplevelExec(check_interrupt_impl, NULL) == FALSE); }
 
-CEnv::CEnv(Rcpp::IntegerMatrix x_, Rcpp::IntegerMatrix mcz_, int K, int Nmis_max,  double a_alpha, double b_alpha) {
+CEnv::CEnv(Rcpp::IntegerMatrix x_, Rcpp::IntegerMatrix mcz_, int K, int Nmis_max,  double a_alpha, double b_alpha, int seed) {
 	SetData(x_, mcz_);
-	SetModel(K, Nmis_max, a_alpha, b_alpha);
+	SetModel(K, Nmis_max, a_alpha, b_alpha, seed);
 	mnburnin = 0;
 	mniters = 0;
 	mncurrnetburnin = 0;
@@ -342,8 +342,8 @@ void CEnv::SetData(std::vector<int>& x_flat, int J, int n, std::vector<int>& Zer
 	data->SetData(x_flat, J, n, ZeroMC_flat, nZeroMC, levels);
 }
 
-void CEnv::SetModel(int K, int Nmis_max,  double a_alpha, double b_alpha) {
-	m = new CLcm(data, K, Nmis_max,a_alpha,b_alpha);
+void CEnv::SetModel(int K, int Nmis_max,  double a_alpha, double b_alpha, int seed) {
+	m = new CLcm(data, K, Nmis_max,a_alpha,b_alpha, seed);
 }
 
 void CEnv::SetTrace(std::vector< std::string > list_, int size) {

@@ -7,7 +7,7 @@ Create and initialize the Rcpp_Lcm model object
 CreateModel creates and initializes an Rcpp_Lcm \link{Rcpp_Lcm-class} object for non-parametric multiple imputation of discrete multivariate categorical data with or without structural zeros.
 }
 \usage{
-CreateModel(X, MCZ, K, Nmax, aalpha, balpha)
+CreateModel(X, MCZ, K, Nmax, aalpha, balpha,seed)
 }
 \arguments{
   \item{X}{a data frame with the dataset with missing values. All variables must be unordered factors.}
@@ -16,6 +16,7 @@ CreateModel(X, MCZ, K, Nmax, aalpha, balpha)
   \item{Nmax}{An upper truncation limit for the augmented sample size. This parameter will be ignored(set to 0) when there is no structural zeros.}
   \item{aalpha}{the hyper parameter 'a' for alpha in stick-breaking prior distribution.}
   \item{balpha}{the hyper parameter 'b' for alpha in stick-breaking prior distribution.}
+  \item{seed}{the random seed for sampling. When setting to NULL(default), the random seed will be set randomly.}
 }
 \details{
 This should be the first function one should call to use the library. The returned model object will be referenced in all subsequent calls. }
@@ -38,7 +39,7 @@ require(NPBayesImputeCat)
 data('NYMockexample')
 
 #create the model
-model <- CreateModel(X,MCZ,10,10000,0.25,0.25)
+model <- CreateModel(X,MCZ,10,10000,0.25,0.25,8888)
 
 #run 1 burnins, 2 mcmc iterations and thin every 2 iterations
 model$Run(1,2,2)

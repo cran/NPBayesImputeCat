@@ -87,7 +87,7 @@ UpdateX <- function(model,X) {
   model$UpdateX(x)
 }
 
-CreateModel <- function(X,MCZ,K, Nmax, aalpha, balpha) {
+CreateModel <- function(X,MCZ,K, Nmax, aalpha, balpha, seed = NULL) {
   .checkx(X)
   if (is.null(MCZ)) {
     Nmax <- 0
@@ -112,7 +112,10 @@ CreateModel <- function(X,MCZ,K, Nmax, aalpha, balpha) {
   
   x <- .dataframe2matrix(X)
   mcz <- .dataframe2matrix(MCZ)
-  model <- new(Lcm,x,mcz,K, Nmax, aalpha, balpha)
+  if (is.null(seed)) {
+    seed = sample(100000,1)
+  } 
+  model <- new(Lcm,x,mcz,K, Nmax, aalpha, balpha, seed)
   model$SetXAsDataframe(X)
   return(model)
 }
