@@ -66,7 +66,7 @@ public:
 	Rcpp::IntegerMatrix GetMCZ();
 	std::vector<std::string> traceable();
 	std::vector<std::string> traced();
-	void Run(int burnin, int iter, int thining);
+	void Run(int burnin, int iter, int thining, bool silent = true);
 	void EnableTracer(bool enable);
 	bool GetTracerStatus();
 	void Resume();
@@ -89,7 +89,8 @@ private:
 	int mncurrentiter;
 	int mnsaved;
 	int mnthinning;
-
+	
+	bool mbsilent;
 	bool mbEnableTracer;
 
 };

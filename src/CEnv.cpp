@@ -47,7 +47,8 @@ static inline void check_interrupt_impl(void* /*dummy*/) {
 inline bool check_interrupt() {
     return (R_ToplevelExec(check_interrupt_impl, NULL) == FALSE); }
 
-CEnv::CEnv(Rcpp::IntegerMatrix x_, Rcpp::IntegerMatrix mcz_, int K, int Nmis_max,  double a_alpha, double b_alpha, int seed) {
+CEnv::CEnv(Rcpp::IntegerMatrix x_, Rcpp::IntegerMatrix mcz_, int K, int Nmis_max,  
+           double a_alpha, double b_alpha, int seed) {
 	SetData(x_, mcz_);
 	SetModel(K, Nmis_max, a_alpha, b_alpha, seed);
 	mnburnin = 0;
@@ -59,6 +60,7 @@ CEnv::CEnv(Rcpp::IntegerMatrix x_, Rcpp::IntegerMatrix mcz_, int K, int Nmis_max
 	t = new CTrace(m);
 	mbEnableTracer = true;
 	NmisOverflow = 0;
+	mbsilent = true;
 }
 
 CEnv::~CEnv(void)
@@ -247,7 +249,9 @@ void CEnv::Resume() {
 		Rprintf( "Resuming mcmc at %d\n", mncurrentiter);
 		for (; mncurrentiter < mniters; mncurrentiter++) {
 			Update();
-			Rprintf( "iter = %d  kstar = %d alpha = %g Nmis = %d\n", mncurrentiter, m->par->k_star,m->par->alpha, m->par->Nmis ) ;
+		  if (!mbsilent) {
+			    Rprintf( "iter = %d  kstar = %d alpha = %g Nmis = %d\n", mncurrentiter, m->par->k_star,m->par->alpha, m->par->Nmis ) ;
+		  }
 			if ( mbEnableTracer && (mncurrentiter+1) % mnthinning == 0) {
 				if (t->Trace(mnsaved,mncurrentiter)) {
 					mnsaved++;
@@ -263,8 +267,9 @@ void CEnv::Resume() {
 		Rprintf( "The last run was finished.\n") ;
 	}
 }
-void CEnv::Run(int burnin, int iter, int thining) {
+void CEnv::Run(int burnin, int iter, int thining, bool silent) {
 	mnburnin = burnin;
+  mbsilent = silent;
 	if (mniters  == 0) { //only do Initialize once if mniters was not set
     Rprintf( "Initializing...\n");
     if (burnin == 1) {
@@ -274,10 +279,14 @@ void CEnv::Run(int burnin, int iter, int thining) {
     }
 		
 		t->PrepareTrace();
-		Rprintf( "iter = %d  kstar = %d alpha = %g Nmis = %d\n", mniters, m->par->k_star,m->par->alpha, m->par->Nmis ) ;
+    if (!mbsilent) {
+		  Rprintf( "iter = %d  kstar = %d alpha = %g Nmis = %d\n", mniters, m->par->k_star,m->par->alpha, m->par->Nmis ) ;
+    }
 		mnsaved = 0; //just for consistance 
 	} else {
-		Rprintf( "Continuing MCMC from previous run(s)...\n");
+	  if (!mbsilent) {
+		  Rprintf( "Continuing MCMC from previous run(s)...\n");
+	  }
 	}
 	mniters = mncurrentiter + iter;
 
@@ -294,7 +303,9 @@ void CEnv::Run(int burnin, int iter, int thining) {
 	
 	for (; mncurrentiter < mniters; mncurrentiter++) {
 		Update();
-		Rprintf( "iter = %d  kstar = %d alpha = %g Nmis = %d\n", mncurrentiter, m->par->k_star,m->par->alpha, m->par->Nmis ) ;
+	  if (!mbsilent) {
+		  Rprintf( "iter = %d  kstar = %d alpha = %g Nmis = %d\n", mncurrentiter, m->par->k_star,m->par->alpha, m->par->Nmis ) ;
+	  }
 		if ( mbEnableTracer && (mncurrentiter+1) % mnthinning == 0) {
 			if (t->Trace(mnsaved,mncurrentiter)) {
 				mnsaved++;
@@ -311,7 +322,9 @@ void CEnv::Run(int burnin, int iter, int thining) {
 void CEnv::Iterate(int iters) {
 	for (int i = 0; i < iters; i++){
 		Update();
-		Rprintf( "iter = %d  kstar = %d alpha = %g Nmis = %d\n", i, m->par->k_star,m->par->alpha, m->par->Nmis ) ;
+	  if (!mbsilent) {
+		    Rprintf( "iter = %d  kstar = %d alpha = %g Nmis = %d\n", i, m->par->k_star,m->par->alpha, m->par->Nmis ) ;
+	  }
 	}
 }
 

@@ -52,7 +52,7 @@ RCPP_MODULE(clcm){
 	.property( "traceable", &CEnv::traceable, "list traceable parameters" )
 	.property( "traced", &CEnv::traced, "list traceable parameters" )
 	.property( "CurrentIteration", &CEnv::GetCurrentIter, "Show current iteration" )
-	.property( "EnableTracer", &CEnv::GetTracerStatus, &CEnv::EnableTracer, "Show current iteration" )
+	.property( "EnableTracer", &CEnv::GetTracerStatus, &CEnv::EnableTracer, "Show current trace status" )
 	.property( "MCZ", &CEnv::GetMCZ, "Retrieve MCZ matrix" )
 
     ;

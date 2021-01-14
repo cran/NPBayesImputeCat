@@ -22,7 +22,7 @@ data('NYMockexample')
 model <- CreateModel(X,MCZ,10,10000,0.25,0.25,8888)
 
 #run 1 burnins, 2 mcmc iterations and thin every 2 iterations
-model$Run(1,2,2)
+model$Run(1,2,2,TRUE)
 
 #retrieve parameters from the final iteration
 result <- model$snapshot
@@ -59,11 +59,12 @@ ImputedX <- GetDataFrame(result$ImputedX,X)
             \item{num_of_iterations:}{the maximum number of traced iterations.}
             }
     }
-    \item{\code{Run(burnin, iter, thinning)}:}{run MCMC iterations.
+    \item{\code{Run(burnin, iter, thinning,silent)}:}{run MCMC iterations.
       \describe{
             \item{burnin:}{number of burn in iterations.}
             \item{iter:}{number of MCMC iterations.}
             \item{thinning:}{thinning parameter.}
+            \item{silent:}{boolean indication if more iteration should be printed.}
             }
     }
     \item{\code{Resume()}:}{resume from an interrupted call to run method.}

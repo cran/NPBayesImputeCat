@@ -50,7 +50,7 @@ data('NYMockexample')
 model <- CreateModel(X,MCZ,10,10000,0.25,0.25,8888)
 
 #run 1 burnins, 2 mcmc iterations and thin every 2 iterations
-model$Run(1,2,2)
+model$Run(1,2,2,TRUE)
 
 #retrieve parameters from the final iteration
 result <- model$snapshot
