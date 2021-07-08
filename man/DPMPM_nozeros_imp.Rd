@@ -24,6 +24,6 @@ DPMPM_nozeros_imp(X, nrun, burn, thin, K, aalpha, balpha, m, seed, silent)
 \value{
   \item{impdata}{m imputed datasets}
   \item{origdata}{original data containing missing values}
-  \item{alpha}{save posterior draws of alpha, which can be used to check MCMC convergence}
+  \item{alpha}{saved posterior draws of alpha, which can be used to check MCMC convergence}
   \item{kstar}{saved number of occupied mixture components, which can be used to track whether K is large enough}
 }

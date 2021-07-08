@@ -1,10 +1,10 @@
 \name{CreateModel}
 \alias{CreateModel}
 \title{
-Create and initialize the Rcpp_Lcm model object
+Create and initialize the Lcm model object
 }
 \description{
-CreateModel creates and initializes an Rcpp_Lcm \link{Rcpp_Lcm-class} object for non-parametric multiple imputation of discrete multivariate categorical data with or without structural zeros.
+CreateModel creates and initializes an Lcm \link{Lcm} object for non-parametric multiple imputation of discrete multivariate categorical data with or without structural zeros.
 }
 \usage{
 CreateModel(X, MCZ, K, Nmax, aalpha, balpha,seed)
@@ -19,11 +19,13 @@ CreateModel(X, MCZ, K, Nmax, aalpha, balpha,seed)
   \item{seed}{the random seed for sampling. When setting to NULL(default), the random seed will be set randomly.}
 }
 \details{
-This should be the first function one should call to use the library. The returned model object will be referenced in all subsequent calls. }
+This function should be the first function one should call to use the `NPBayesImputeCat`
+library. The returned model is a Lcm object. See ?Lcm
+for more details on the fields available and their arguments. }
 
 \value{
 
-CreateModel returns an Rcpp_lcm object. The returned model object will be referenced in all subsequent calls.
+CreateModel returns an Lcm object. The returned model object will be referenced in all subsequent calls.
 }
 
 \references{

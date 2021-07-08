@@ -22,8 +22,8 @@ a priori.
 \tabular{ll}{
 Package: \tab NPBayesImputeCat\cr
 Type: \tab Package\cr
-Version: \tab 0.1\cr
-Date: \tab 2014-04-05\cr
+Version: \tab 0.4\cr
+Date: \tab 2021-06-30\cr
 License: \tab GPL(>=3) \cr
 }
 }
