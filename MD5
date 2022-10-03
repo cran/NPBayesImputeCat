@@ -1,8 +1,8 @@
-8e6e12aeebb562929528bc2acd085d6a *DESCRIPTION
+a1bee69ab5e9ec9f804f06aae30f396c *DESCRIPTION
 96b05a787ee8cc1c84ba13f96059e95e *NAMESPACE
 7ca132d17ddfb58c7ea683ffed6d3d28 *R/AllFunctions.R
 e3a85ae223aa4596af738021d25562ca *R/ArrayUtils.R
-1bd6eb7180aa094bfe647bb32ab6fefe *R/NewUpdates_v2.R
+87fcd57ad254582c942a021354181eeb *R/NewUpdates_v2.R
 d6251fc798b6ac6363f709cac343f10b *R/zzz.R
 8ac28ac9175a1c7c781d312c20cce396 *data/NYMockexample.RData
 b9cec561ef3906c31db8b8a98cc340ef *data/NYexample.RData
@@ -54,7 +54,7 @@ d9dde0d103bc87d193406465d4a468d6 *src/CEnv.h
 e867ab820eb9d50114b1b72be0697a40 *src/CTrace.h
 b3f86c20b81b51f5162874977d38784d *src/Makevars
 73505498722ad4b07b0ddb3067e92523 *src/Makevars.win
-09eb3e2fb4156af542c3a2bbc99e5d14 *src/RcppExports.cpp
+b85c3f6518cc34822ea503bf480319ee *src/RcppExports.cpp
 1fc824ca56b3c38c3cdc3f6a42dd1eea *src/SpecialFunctions.cpp
 bdd28cebe081c2ba6491a0b913a95d1f *src/SpecialFunctions.h
 cf2710834c35b2d102927ce0948effbb *src/lczmain.cpp
